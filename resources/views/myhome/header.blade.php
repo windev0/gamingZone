@@ -7,7 +7,7 @@
                 <img src="/assets/images/svg/search.svg" alt="" class="">
             </button>
         </form>
-    </div>
+    </div>                        
     <div class="header-items icons d-flex">
         <a href=""> <img src="/assets/images/svg/bell.svg" alt="" class="text-white"></a>
         <a href="{{ route('login') }}">

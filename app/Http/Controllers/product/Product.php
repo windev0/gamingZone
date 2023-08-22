@@ -1,19 +1,26 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\product;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 
-class DashBoardController extends Controller
+class Product extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function indexGameDevices()
+    {   
+        return view('myhome.products.gameDevices');
+    }
+
+    public function indexPCDevices()
+    {   
+        return view('myhome.products.pcDevices');
     }
 
     /**
@@ -21,9 +28,9 @@ class DashBoardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createGameDevice()
     {
-        //
+        return view('myhome.products.createProductForm.createGameDevice');
     }
 
     /**

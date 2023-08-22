@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashBoardController;
+use App\Http\Controllers\product\Product;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,10 +18,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('myhome.main.main');
+    return view('myhome.main.main')->name('home');
 });
-Route::get('dashboard', [DashBoardController::class, 'index'])->name('dashboard');
 
+Route::get('/admin', function () {
+    return view('myhome.products.gameDevices');
+});
+
+// Product
+Route::get('/admin/game_devices', [Product::class, 'indexGameDevices'])->name('getAllGameDevices');
+Route::get('/admin/pc_devices', [Product::class, 'indexPcDevices'])->name('getAllPCDevices');
+
+Route::get('/admin/create_game_devices', [Product::class, 'createGameDevice'])->name('createGameDevice');
 
 Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/register', 'App\Http\Controllers\Auth\RegisterController@register');
@@ -39,4 +48,3 @@ Route::get('/email/verify/{id}/{hash}', 'App\Http\Controllers\Auth\VerificationC
 Route::post('/email/resend', 'App\Http\Controllers\Auth\VerificationController@resend')->name('verification.resend');
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
