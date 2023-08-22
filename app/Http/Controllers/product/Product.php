@@ -32,6 +32,10 @@ class Product extends Controller
     {
         return view('myhome.products.createProductForm.createGameDevice');
     }
+    public function createPCDevice()
+    {
+        return view('myhome.products.createProductForm.createPCDevice');
+    }
 
     /**
      * Store a newly created resource in storage.

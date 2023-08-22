@@ -1,6 +1,5 @@
 @extends('myhome.admin.admin')
 @section('product-actions')
-
     </div>
     <div style="margin-top: 13%; margin-left:15%;">
         <div class="card">
@@ -70,8 +69,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer"><button class="btn btn-success">Ajouter</button></div>
+            <div class="card-footer"><a href="{{ route('createPCDevice') }}" class="btn btn-success">Ajouter</a></div>
         </div>
     </div>
 @endsection
-

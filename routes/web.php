@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('myhome.main.main')->name('home');
+    return view('myhome.main.main');
 });
 
 Route::get('/admin', function () {
@@ -29,7 +29,8 @@ Route::get('/admin', function () {
 Route::get('/admin/game_devices', [Product::class, 'indexGameDevices'])->name('getAllGameDevices');
 Route::get('/admin/pc_devices', [Product::class, 'indexPcDevices'])->name('getAllPCDevices');
 
-Route::get('/admin/create_game_devices', [Product::class, 'createGameDevice'])->name('createGameDevice');
+Route::get('/admin/create-game-device', [Product::class, 'createGameDevice'])->name('createGameDevice');
+Route::get('/admin/create-pc-device', [Product::class, 'createPCDevice'])->name('createPCDevice');
 
 Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/register', 'App\Http\Controllers\Auth\RegisterController@register');

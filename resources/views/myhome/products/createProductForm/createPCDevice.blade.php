@@ -1,5 +1,5 @@
 @section('type')
-    Accessoire de jeux
+    Accessoire de PC
 @endsection
 @extends('myhome.admin.admin')
 @section('product-actions')
