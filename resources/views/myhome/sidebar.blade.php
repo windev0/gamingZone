@@ -85,7 +85,7 @@
                         <span class="nav_name">Messages</span>
                     </a>
                 </div>
-                <a href="#" class="nav_link">
+                <a href="{{route('logout')}}" class="nav_link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-sign-stop" viewBox="0 0 16 16">
                         <path
