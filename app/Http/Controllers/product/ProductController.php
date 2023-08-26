@@ -7,16 +7,27 @@ use App\Models\product\Product;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 
-class ProductController extends Controller
+class  ProductController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function getProduct()
+    {
+        $products = Product::all();
+        return $products;
+    }
+
     public function indexGameDevices()
     {
-        return view('myhome.products.gameDevices');
+        $gameDevices = $this->getProduct();
+        // dd($gameDevices);
+
+        return view('myhome.products.gameDevices', compact('gameDevices'));
     }
 
     public function indexPCDevices()
