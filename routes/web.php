@@ -32,10 +32,12 @@ Route::get('/admin', function () {
 // Product
 Route::get('/admin/game-devices', [ProductController::class, 'indexGameDevices'])->name('getAllGameDevices');
 Route::get('/admin/pc-devices', [ProductController::class, 'indexPcDevices'])->name('getAllPCDevices');
+Route::get('/admin/phones', [ProductController::class, 'indexPhones'])->name('getAllPhones');
 
 // Product-create
 Route::get('/admin/create-game-device', [ProductController::class, 'createGameDevice'])->name('createGameDevice');
 Route::get('/admin/create-pc-device', [ProductController::class, 'createPCDevice'])->name('createPCDevice');
+Route::get('/admin/create-phone', [ProductController::class, 'createPhone'])->name('createPhone');
 
 //Product-store 
 Route::post('/admin/insert-product', [ProductController::class, 'store'])->name('store');

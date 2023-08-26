@@ -38,7 +38,7 @@
                         </svg>
                         <span class="nav_name" style="font-size: 1.1rem">Accesoires de jeux</span>
                     </a>
-                    <a href="#" class="nav_link">
+                    <a href="{{route('getAllPhones')}}" class="nav_link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-phone-fill" viewBox="0 0 16 16">
                             <path

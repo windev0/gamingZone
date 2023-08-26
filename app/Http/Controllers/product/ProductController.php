@@ -23,6 +23,10 @@ class ProductController extends Controller
     {
         return view('myhome.products.pcDevices');
     }
+    public function indexPhones()
+    {
+        return view('myhome.products.phones');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -36,6 +40,10 @@ class ProductController extends Controller
     public function createPCDevice()
     {
         return view('myhome.products.createProductForm.createPCDevice');
+    }
+    public function createPhone()
+    {
+        return view('myhome.products.createProductForm.createPhone');
     }
 
     /**
