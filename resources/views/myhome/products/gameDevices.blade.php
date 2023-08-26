@@ -18,7 +18,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($gameDevices as $item)
+                        @foreach ($game_devices as $item)
                             <tr>
                                 <th scope="row">{{ $item->id }} </th>
                                 <td>{{ $item->name }}</td>

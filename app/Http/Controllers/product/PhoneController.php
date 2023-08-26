@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\product;
 
 use App\Http\Controllers\Controller;
+use App\Models\product\Phone;
 use Illuminate\Http\Request;
 
 class PhoneController extends Controller
@@ -14,7 +15,8 @@ class PhoneController extends Controller
      */
     public function index()
     {
-        //
+        $phones = Phone::all();
+        return view('myhome.products.phones', compact('phones'));
     }
 
     /**
@@ -24,7 +26,7 @@ class PhoneController extends Controller
      */
     public function create()
     {
-        //
+        return view('myhome.products.createProductForm.createPhone');
     }
 
     /**
@@ -35,7 +37,27 @@ class PhoneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validProduct = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'image' => 'required|image|mimes:jpg,jpeg,png,gif,svg',
+            'quantity' => 'required',
+            'date' => 'required ',
+            'popular' => 'required'
+        ]);
+        $image = $request->file('image');
+        $destinationPath = 'assets/products/images/phone';
+        $extension = $image->getClientOriginalExtension();
+        $imageName = date("YmdHis") . '.' . $extension;
+        $image->move($destinationPath, $imageName);
+
+        $validProduct['image'] = $imageName;
+
+        $product = Phone::create($validProduct);
+        $product->save();
+        return redirect('/admin/phones')->with('status', 'Phone successfully added');
     }
 
     /**

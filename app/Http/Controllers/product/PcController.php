@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\product;
 
 use App\Http\Controllers\Controller;
+use App\Models\product\PcDevice;
 use Illuminate\Http\Request;
 
 class PcController extends Controller
@@ -14,7 +15,9 @@ class PcController extends Controller
      */
     public function index()
     {
-        //
+        $pcDevices = PcDevice::all();
+        return view('myhome.products.pcDevices', compact('pcDevices'));
+
     }
 
     /**
@@ -24,7 +27,8 @@ class PcController extends Controller
      */
     public function create()
     {
-        //
+        $pcDevices = PcDevice::all();
+        return view('myhome.products.createProductForm.createPCDevice', compact('pcDevices'));
     }
 
     /**
@@ -35,7 +39,26 @@ class PcController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validProduct = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'image' => 'required|image|mimes:jpg,jpeg,png,gif,svg',
+            'quantity' => 'required',
+            'date' => 'required ',
+            'popular' => 'required'
+        ]);
+        $image = $request->file('image');
+        $destinationPath = 'assets/products/images/pc';
+        $extension = $image->getClientOriginalExtension();
+        $imageName = date("YmdHis") . '.' . $extension;
+        $image->move($destinationPath, $imageName);
+
+        $validProduct['image'] = $imageName;
+
+        $product = PcDevice::create($validProduct);
+        $product->save();
+        return redirect('/admin/pc-devices')->with('status', 'PC device successfully added');
     }
 
     /**

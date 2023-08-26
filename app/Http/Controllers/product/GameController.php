@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\product;
 
 use App\Http\Controllers\Controller;
+use App\Models\product\GameDevice;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -14,7 +15,8 @@ class GameController extends Controller
      */
     public function index()
     {
-        //
+        $game_devices = GameDevice::all();
+        return view('myhome.products.gameDevices', compact('game_devices'));
     }
 
     /**
@@ -24,7 +26,7 @@ class GameController extends Controller
      */
     public function create()
     {
-        //
+        return view('myhome.products.createProductForm.createGameDevice');
     }
 
     /**
@@ -35,7 +37,26 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validProduct = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'image' => 'required|image|mimes:jpg,jpeg,png,gif,svg',
+            'quantity' => 'required',
+            'date' => 'required ',
+            'popular' => 'required'
+        ]);
+        $image = $request->file('image');
+        $destinationPath = 'assets/products/images/game';
+        $extension = $image->getClientOriginalExtension();
+        $imageName = date("YmdHis") . '.' . $extension;
+        $image->move($destinationPath, $imageName);
+
+        $validProduct['image'] = $imageName;
+
+        $product = GameDevice::create($validProduct);
+        $product->save();
+        return redirect('/admin/game-devices')->with('status', 'Game device successfully added');
     }
 
     /**
