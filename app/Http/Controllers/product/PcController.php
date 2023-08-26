@@ -5,7 +5,7 @@ namespace App\Http\Controllers\product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class GameController extends Controller
+class PcController extends Controller
 {
     /**
      * Display a listing of the resource.
