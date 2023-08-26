@@ -24,38 +24,51 @@
         <h5>Nouvel enregistrement</h5>
     </div>
     <div class="card-body">
-        <form action="" method="post">
+        <form action="{{ route('store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div>
                 <div class="form-group form-line">
-                    <input type="text" name="name" placeholder="Nom du produit" id="" class="form-control">
+                    <input type="text" name="name" placeholder="Nom du produit" id="" class="form-control"
+                        required>
                     <input type="number" name="price" placeholder="Prix du produit" id=""
-                        class="form-control">
-                    <input type="number" name="quantity" placeholder="Quantité" id="" class="form-control">
+                        class="form-control" @required(true)>
+                    <input type="number" name="quantity" placeholder="Quantité" id="" class="form-control"
+                        required>
                 </div>
                 <br>
                 <div class="text-area">
                     <textarea name="description" id="" cols="95" rows="3" class="form-control"
-                        placeholder="Description du produit"></textarea>
+                        placeholder="Description du produit" required></textarea>
                 </div>
                 <br>
-                <fieldset class="type ">
+                <div class="type ">
                     <span><b>Type de produit</b></span>
                     <span><b>Date d'ajout</b></span>
+                </div>
+                <div class="type">
+                    <select name="type" id="" class="form-control">
+                        <option value="@yield('type')">Choisir</option>
+                        <option value="@yield('type')">@yield('type')</option>
+                    </select>
+                    {{-- <input type="text" name="type" placeholder="Type du produit" id="" class="form-control"
+                    value="@yield('type')" width="4" disabled required> --}}
+                    <input type="date" name="date" id="" class="form-control" style="margin-left: 8px;"
+                        required>
+                </div>
+                <br>
+                <div class="type ">
+                    <span><b>Image</b></span>
+                    <span><b>Popularité</b></span>
+                </div>
+                <div class="form-group form-line">
+                    <input type="file" name="image" id="" class="form-control" required>
+                    <select name="popular" id="" class="form-control" style="margin-left: 8px;" required>
+                        <option value="0">0</option>
+                    </select>
+                </div>
             </div>
-            <div class="type">
-                <input type="text" name="type" placeholder="Type du produit" id="" class="form-control"
-                    value="@yield('type')" width="4" disabled>
-                <input type="date" name="createdAt" id="" class="form-control" style="margin-left: 8px;">
-            </div>
-            <br>
-            <div class="form-group form-line">
-                <b>Image</b>
-                <input type="file" name="image" id="" class="form-control">
-            </div>
-    </div>
-    <div class="card-footer"><button class="btn btn-success" type="submit">Enregistrer</button></div>
-    </form>
+            <div class="card-footer mt-3"><button class="btn btn-success" type="submit">Enregistrer</button></div>
+        </form>
 
-</div>
+    </div>
 </div>

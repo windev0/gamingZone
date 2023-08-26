@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\DashBoardController;
-use App\Http\Controllers\product\Product;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\product\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\VerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,35 +19,45 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// main view for the customer (preview of the deployment)
 Route::get('/', function () {
     return view('myhome.main.main');
 });
 
+// administration page 
 Route::get('/admin', function () {
     return view('myhome.products.gameDevices');
 });
 
 // Product
-Route::get('/admin/game_devices', [Product::class, 'indexGameDevices'])->name('getAllGameDevices');
-Route::get('/admin/pc_devices', [Product::class, 'indexPcDevices'])->name('getAllPCDevices');
+Route::get('/admin/game-devices', [ProductController::class, 'indexGameDevices'])->name('getAllGameDevices');
+Route::get('/admin/pc-devices', [ProductController::class, 'indexPcDevices'])->name('getAllPCDevices');
 
-Route::get('/admin/create-game-device', [Product::class, 'createGameDevice'])->name('createGameDevice');
-Route::get('/admin/create-pc-device', [Product::class, 'createPCDevice'])->name('createPCDevice');
+// Product-create
+Route::get('/admin/create-game-device', [ProductController::class, 'createGameDevice'])->name('createGameDevice');
+Route::get('/admin/create-pc-device', [ProductController::class, 'createPCDevice'])->name('createPCDevice');
 
-Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('/register', 'App\Http\Controllers\Auth\RegisterController@register');
+//Product-store 
+Route::post('/admin/insert-product', [ProductController::class, 'store'])->name('store');
 
-Route::get('/login', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
-Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login');
-Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+// Register
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
 
-Route::get('/password/reset', 'App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-Route::post('/password/email', 'App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('/password/reset/{token}', 'App\Http\Controllers\Auth\ResetPasswordController@showResetForm')->name('password.reset');
-Route::post('/password/reset', 'App\Http\Controllers\Auth\ResetPasswordController@reset');
+// login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
 
-Route::get('/email/verify', 'App\Http\Controllers\Auth\VerificationController@show')->name('verification.notice');
-Route::get('/email/verify/{id}/{hash}', 'App\Http\Controllers\Auth\VerificationController@verify')->name('verification.verify');
-Route::post('/email/resend', 'App\Http\Controllers\Auth\VerificationController@resend')->name('verification.resend');
+// logout
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+// password management
+Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
 
+// email management
+Route::get('/email/verify', [VerificationController::class, 'show'])->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
+Route::post('/email/resend', [VerificationController::class, 'resend'])->name('verification.resend');

@@ -1,0 +1,7 @@
+.navbar .nav-item:hover {
+    color: white;
+}
+
+.navbar .nav-item {
+    color: rgb(201, 200, 200);
+}

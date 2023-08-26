@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\product;
 
 use App\Http\Controllers\Controller;
+use App\Models\product\Product;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 
-class Product extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +15,12 @@ class Product extends Controller
      * @return \Illuminate\Http\Response
      */
     public function indexGameDevices()
-    {   
+    {
         return view('myhome.products.gameDevices');
     }
 
     public function indexPCDevices()
-    {   
+    {
         return view('myhome.products.pcDevices');
     }
 
@@ -45,7 +46,28 @@ class Product extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validProduct = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'image' => 'required|image|mimes:jpg,jpeg,png,gif,svg',
+            'quantity' => 'required',
+            'type' => 'required',
+            'date' => 'required ',
+            'popular' => 'required'
+        ]);
+        $image = $request->file('image');
+        $destinationPath = 'assets/products/uploads/images';
+        $extension = $image->getClientOriginalExtension();
+        $imageName = date("YmdHis") . '.' . $extension;
+        $image->move($destinationPath, $imageName);
+
+        $validProduct['image'] = $imageName;
+
+        $product = Product::create($validProduct);
+        $product->popular = "0";
+        $product->save();
+        return redirect('/admin/game-devices')->with('status', 'Product successfully added');
     }
 
     /**
