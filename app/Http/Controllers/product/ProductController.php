@@ -73,7 +73,6 @@ class ProductController extends Controller
         $validProduct['image'] = $imageName;
 
         $product = Product::create($validProduct);
-        $product->popular = "0";
         $product->save();
         return redirect('/admin/game-devices')->with('status', 'Product successfully added');
     }
