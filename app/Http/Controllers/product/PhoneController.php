@@ -4,7 +4,9 @@ namespace App\Http\Controllers\product;
 
 use App\Http\Controllers\Controller;
 use App\Models\product\Phone;
+use Faker\Core\File;
 use Illuminate\Http\Request;
+use Illuminate\Http\Testing\File as TestingFile;
 
 class PhoneController extends Controller
 {
@@ -102,6 +104,14 @@ class PhoneController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $phone = Phone::find($id);
+        // if ($phone->image) {
+        //     $path = 'assets/products/images/phone' . $phone->image;
+        //     if (TestingFile::exists($path)) {
+        //         TestingFile::delete($path);
+        //     }
+        // }
+        $phone->delete();
+        return redirect('/admin/phones')->with('status', 'Phone successfully deleted');
     }
 }

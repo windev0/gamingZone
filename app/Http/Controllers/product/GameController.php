@@ -5,6 +5,8 @@ namespace App\Http\Controllers\product;
 use App\Http\Controllers\Controller;
 use App\Models\product\GameDevice;
 use Illuminate\Http\Request;
+use Illuminate\Http\Testing\File;
+use Illuminate\Validation\Rules\Exists;
 
 class GameController extends Controller
 {
@@ -101,6 +103,14 @@ class GameController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $game_device = GameDevice::find($id);
+        // if ($game_device->image) {
+        //     $path = 'assets/products/images/game' . $game_device->image;
+        //     if (File::exists($path)) {
+        //         File::delete($path);
+        //     }
+        // }
+        $game_device->delete();
+        return redirect('/admin/game-devices')->with('status', 'Game device successfully deleted');
     }
 }

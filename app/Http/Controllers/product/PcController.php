@@ -5,6 +5,7 @@ namespace App\Http\Controllers\product;
 use App\Http\Controllers\Controller;
 use App\Models\product\PcDevice;
 use Illuminate\Http\Request;
+use Illuminate\Http\Testing\File;
 
 class PcController extends Controller
 {
@@ -17,7 +18,6 @@ class PcController extends Controller
     {
         $pcDevices = PcDevice::all();
         return view('myhome.products.pcDevices', compact('pcDevices'));
-
     }
 
     /**
@@ -103,6 +103,14 @@ class PcController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pc_device = PcDevice::find($id);
+        // if ($pc_device->image) {
+        //     $path = 'assets/products/images/pc' . $pc_device->image;
+        //     if (File::exists($path)) {
+        //         File::delete($path);
+        //     }
+        // }
+        $pc_device->delete();
+        return redirect('/admin/pc-devices')->with('status', 'PC device successfully deleted');
     }
 }

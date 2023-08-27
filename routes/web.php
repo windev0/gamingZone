@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\product\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -10,6 +9,7 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\product\GameController;
 use App\Http\Controllers\product\PcController;
 use App\Http\Controllers\product\PhoneController;
+use App\Models\product\GameDevice;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,24 +30,26 @@ Route::get('/', function () {
 // administration page for admin
 Route::middleware(['auth', 'isAdmin'])->group(function () {
 
+//  ############ PRODUCTS ##############
+
     // Game devices
     Route::get('/admin/game-devices', [GameController::class, 'index'])->name('getAllGameDevices');
     Route::get('/admin/create-game-device', [GameController::class, 'create'])->name('createGameDevice');
     Route::post('/admin/insert-game-device', [GameController::class, 'store'])->name('gameStore');
+    Route::delete('/admin/delete-game-device/{id}', [GameController::class, 'destroy'])->name('gameDelete');
 
     // Pc devices
     Route::get('/admin/pc-devices', [PcController::class, 'index'])->name('getAllPCDevices');
     Route::get('/admin/create-pc-device', [PcController::class, 'create'])->name('createPCDevice');
     Route::post('/admin/insert-pc-device', [PcController::class, 'store'])->name('pcStore');
+    Route::get('/admin/delete-pc-device/{id}', [PcController::class, 'destroy'])->name('pcDelete');
 
     // Phones
     Route::get('/admin/phones', [PhoneController::class, 'index'])->name('getAllPhones');
     Route::get('/admin/create-phone', [PhoneController::class, 'create'])->name('createPhone');
     Route::post('/admin/insert-phone', [PhoneController::class, 'store'])->name('phoneStore');
+    Route::get('/admin/delete-phone/{id}', [PhoneController::class, 'destroy'])->name('phoneDelete');
 });
-
-//  ############ PRODUCTS ##############
-
 
 // --------------------------------------------------------------------------------------------------------
 

@@ -22,7 +22,7 @@
                                 <th scope="row">{{ $item->id }} </th>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->quantity }}</td>
-                                <td>supp</td>
+                                <td><a href="{{ url('/admin/delete-pc-device/' . $item->id) }}">supp</a></td>
                                 <td>mod</td>
                                 <td>:::</td>
                             </tr>
