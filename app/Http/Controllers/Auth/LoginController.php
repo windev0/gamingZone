@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -41,5 +42,14 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('auth.login');
+    }
+
+    public function authenticated()
+    {
+        if (Auth::user()->role_as === "1") {
+            return redirect('/admin/game-devices')->with('Bienvenue' . Auth::user()->name . 'sur votre tableau de bord');
+        } elseif (Auth::user()->role_as === "0") {
+            return redirect('/')->with('Bienvenue' . Auth::user()->name . ',vous etes connecté(e) avec succès');
+        }
     }
 }

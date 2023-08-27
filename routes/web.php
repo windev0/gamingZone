@@ -22,32 +22,32 @@ use App\Http\Controllers\product\PhoneController;
 |
 */
 
-// main view for the customer (preview of the deployment)
+// main view for the customer or simple user (preview of the deployment)
 Route::get('/', function () {
     return view('myhome.main.main');
 });
 
-// administration page 
-Route::get('/admin', function () {
-    return view('myhome.products.gameDevices');
+// administration page for admin
+Route::middleware(['auth', 'isAdmin'])->group(function () {
+
+    // Game devices
+    Route::get('/admin/game-devices', [GameController::class, 'index'])->name('getAllGameDevices');
+    Route::get('/admin/create-game-device', [GameController::class, 'create'])->name('createGameDevice');
+    Route::post('/admin/insert-game-device', [GameController::class, 'store'])->name('gameStore');
+
+    // Pc devices
+    Route::get('/admin/pc-devices', [PcController::class, 'index'])->name('getAllPCDevices');
+    Route::get('/admin/create-pc-device', [PcController::class, 'create'])->name('createPCDevice');
+    Route::post('/admin/insert-pc-device', [PcController::class, 'store'])->name('pcStore');
+
+    // Phones
+    Route::get('/admin/phones', [PhoneController::class, 'index'])->name('getAllPhones');
+    Route::get('/admin/create-phone', [PhoneController::class, 'create'])->name('createPhone');
+    Route::post('/admin/insert-phone', [PhoneController::class, 'store'])->name('phoneStore');
 });
 
 //  ############ PRODUCTS ##############
 
-// Game devices
-Route::get('/admin/game-devices', [GameController::class, 'index'])->name('getAllGameDevices');
-Route::get('/admin/create-game-device', [GameController::class, 'create'])->name('createGameDevice');
-Route::post('/admin/insert-game-device', [GameController::class, 'store'])->name('gameStore');
-
-// Pc devices
-Route::get('/admin/pc-devices', [PcController::class, 'index'])->name('getAllPCDevices');
-Route::get('/admin/create-pc-device', [PcController::class, 'create'])->name('createPCDevice');
-Route::post('/admin/insert-pc-device', [PcController::class, 'store'])->name('pcStore');
-
-// Phones
-Route::get('/admin/phones', [PhoneController::class, 'index'])->name('getAllPhones');
-Route::get('/admin/create-phone', [PhoneController::class, 'create'])->name('createPhone');
-Route::post('/admin/insert-phone', [PhoneController::class, 'store'])->name('phoneStore');
 
 // --------------------------------------------------------------------------------------------------------
 
