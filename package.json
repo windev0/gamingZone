@@ -19,7 +19,6 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "bootstrap-icons": "^1.10.5",
-        "sweetalert": "^2.1.2"
+        "bootstrap-icons": "^1.10.5"
     }
 }

@@ -123,7 +123,7 @@ class GameController extends Controller
 
         $game_device->update($validProduct);
 
-        return redirect('admin/game-devices');
+        return redirect('admin/game-devices')->with('status', 'Modification réussie');
     }
 
     /**
