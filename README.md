@@ -23,10 +23,10 @@ Il s'agit d'un projet de mise en place d'une application web de gestion d'une bo
     ATTITSO Akou Emilie
 
 ## setup
-    - cloner le projet
-    - exécuter dans le terminal la commande `composer install`
-    - ouvrir le projet avec un éditeur de code
-    - exécuter la commande php artisan serve
+- cloner le projet
+- exécuter dans le terminal la commande `composer install`
+- ouvrir le projet avec un éditeur de code
+- exécuter la commande php artisan serve
 
 # Aperçu
 ![apprçu de l'application web](image.png)
