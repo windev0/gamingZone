@@ -22,7 +22,7 @@
 
     @if (session('status'))
         <script>
-            swal("{{ session('status') }}");
+            swal("{{ session('status') }}", "", "success");
         </script>
     @endif
 </body>
