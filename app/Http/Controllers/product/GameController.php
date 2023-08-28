@@ -5,8 +5,7 @@ namespace App\Http\Controllers\product;
 use App\Http\Controllers\Controller;
 use App\Models\product\GameDevice;
 use Illuminate\Http\Request;
-use Illuminate\Http\Testing\File;
-use Illuminate\Validation\Rules\Exists;
+
 
 class GameController extends Controller
 {
@@ -69,7 +68,8 @@ class GameController extends Controller
      */
     public function show($id)
     {
-        //
+        $game_device = GameDevice::find($id);
+        return view('myhome.products.showProducts.showGameDevice', compact('game_device'));
     }
 
     /**
@@ -80,7 +80,8 @@ class GameController extends Controller
      */
     public function edit($id)
     {
-        //
+        $game_device = GameDevice::find($id);
+        return view('myhome.products.editProductForm.editGameDevice', compact('game_device'));
     }
 
     /**
@@ -92,7 +93,37 @@ class GameController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $game_device = GameDevice::find($id);
+        $validProduct = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'image' => 'image|mimes:jpg,jpeg,png,gif,svg',
+            'quantity' => 'required',
+            'date' => 'required ',
+            'popular' => 'required'
+        ]);
+
+        if ($request->image) {
+            $image = $request->file('image');
+            $destinationPath = 'assets/products/images/game';
+            $extension = $image->getClientOriginalExtension();
+            $imageName = date("YmdHis") . '.' . $extension;
+            $validProduct['image'] = $imageName;
+            $game_device->image = $image;
+
+            if ($game_device->image) {
+                $oldImagePath = $destinationPath . '/' . $game_device->image;
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+            $image->move($destinationPath, $imageName);
+        }
+
+        $game_device->update($validProduct);
+
+        return redirect('admin/game-devices');
     }
 
     /**
@@ -104,12 +135,12 @@ class GameController extends Controller
     public function destroy($id)
     {
         $game_device = GameDevice::find($id);
-        // if ($game_device->image) {
-        //     $path = 'assets/products/images/game' . $game_device->image;
-        //     if (File::exists($path)) {
-        //         File::delete($path);
-        //     }
-        // }
+        if ($game_device->image) {
+            $oldImagePath = 'assets/products/images/game' . '/' . $game_device->image;
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+        }
         $game_device->delete();
         return redirect('/admin/game-devices')->with('status', 'Game device successfully deleted');
     }

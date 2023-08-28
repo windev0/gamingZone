@@ -69,7 +69,8 @@ class PcController extends Controller
      */
     public function show($id)
     {
-        //
+        $pc_device = PcDevice::find($id);
+        return view('myhome.products.showProducts.showPcDevice',  compact('pc_device'));
     }
 
     /**
@@ -80,7 +81,8 @@ class PcController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pc_device = PcDevice::find($id);
+        return view('myhome.products.editProductForm.editPcDevice', compact('pc_device'));
     }
 
     /**
@@ -92,7 +94,37 @@ class PcController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $pc_device = PcDevice::find($id);
+        $validProduct = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'image' => 'image|mimes:jpg,jpeg,png,gif,svg',
+            'quantity' => 'required',
+            'date' => 'required ',
+            'popular' => 'required'
+        ]);
+
+        if ($request->image) {
+            $image = $request->file('image');
+            $destinationPath = 'assets/products/images/pc';
+            $extension = $image->getClientOriginalExtension();
+            $imageName = date("YmdHis") . '.' . $extension;
+            $validProduct['image'] = $imageName;
+            $pc_device->image = $image;
+
+            if ($pc_device->image) {
+                $oldImagePath = $destinationPath . '/' . $pc_device->image;
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+            $image->move($destinationPath, $imageName);
+        }
+
+        $pc_device->update($validProduct);
+
+        return redirect('admin/pc-devices');
     }
 
     /**
@@ -104,12 +136,13 @@ class PcController extends Controller
     public function destroy($id)
     {
         $pc_device = PcDevice::find($id);
-        // if ($pc_device->image) {
-        //     $path = 'assets/products/images/pc' . $pc_device->image;
-        //     if (File::exists($path)) {
-        //         File::delete($path);
-        //     }
-        // }
+        
+        if ($pc_device->image) {
+            $oldImagePath = 'assets/products/images/pc' . '/' . $pc_device->image;
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+        }
         $pc_device->delete();
         return redirect('/admin/pc-devices')->with('status', 'PC device successfully deleted');
     }

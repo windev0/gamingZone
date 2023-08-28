@@ -29,16 +29,16 @@
             <div>
                 <div class="form-group form-line">
                     <input type="text" name="name" placeholder="Nom du produit" id="" class="form-control"
-                        required>
+                     value="@yield('name')"   required>
                     <input type="number" name="price" placeholder="Prix du produit" id=""
-                        class="form-control" @required(true)>
+                        class="form-control" value="@yield('price')" @required(true)>
                     <input type="number" name="quantity" placeholder="Quantité" id="" class="form-control"
-                        required>
+                     value="@yield('quantity')"   required>
                 </div>
                 <br>
                 <div class="text-area">
                     <textarea name="description" id="" cols="95" rows="3" class="form-control"
-                        placeholder="Description du produit" required></textarea>
+                        placeholder="Description du produit" required>@yield('description')</textarea>
                 </div>
                 <br>
                 <div class="type ">
@@ -50,14 +50,14 @@
                         <option value="0">0</option>
                     </select>
                     <input type="date" name="date" id="" class="form-control" style="margin-left: 8px;"
-                        required>
+                     value="@yield('date')"   required>
                 </div>
                 <br>
                 <div class="type ">
                     <span><b>Image</b></span>
                 </div>
                 <div class="form-group form-line">
-                    <input type="file" name="image" id="" class="form-control" required>
+                    <input type="file" name="image" id="" class="form-control" value="@yield('image')" required>
                 </div>
             </div>
             <div class="card-footer mt-3"><button class="btn btn-success" type="submit">Enregistrer</button></div>

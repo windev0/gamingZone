@@ -11,6 +11,7 @@
                             <th scope="col">N°</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Quantité</th>
+                            <th scope="col">Prix</th>
                             <th scope="col">Supprimer</th>
                             <th scope="col">Modifier</th>
                             <th scope="col">Voir</th>
@@ -23,9 +24,22 @@
                                 <th scope="row">{{ $item->id }} </th>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->quantity }}</td>
-                                <td><a href="{{ url('/admin/delete-game-device/' . $item->id) }}">supp</a></td>
-                                <td>mod</td>
-                                <td>:::</td>
+                                <td>{{ $item->price }}</td>
+                                <form action="{{ url('/admin/delete-game-device/' . $item->id) }}" method="POST">
+                                    @method('GET')
+                                    @csrf
+                                    <td><button class="btn btn-outline-danger text-dark" type='submit'>supp</button></td>
+                                </form>
+                                <form action="{{ url('/admin/edit-game-device/' . $item->id) }}" method="POST">
+                                    @method('GET')
+                                    @csrf
+                                    <td><button class="btn btn-outline-warning text-dark" type='submit'>mod</button></td>
+                                </form>
+                                <form action="{{ url('/admin/show-game-device/' . $item->id) }}" method="POST">
+                                    @method('GET')
+                                    @csrf
+                                    <td><button class="btn btn-outline-primary text-dark" type='submit'><b>:::</b></button></td>
+                                </form>
                             </tr>
                         @endforeach
                     </tbody>

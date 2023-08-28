@@ -70,7 +70,8 @@ class PhoneController extends Controller
      */
     public function show($id)
     {
-        //
+        $phone = Phone::find($id);
+        return view('myhome.products.showProducts.showPhone', compact('phone'));
     }
 
     /**
@@ -81,7 +82,8 @@ class PhoneController extends Controller
      */
     public function edit($id)
     {
-        //
+        $phone = Phone::find($id);
+        return view('myhome.products.editProductForm.editPhone', compact('phone'));
     }
 
     /**
@@ -93,7 +95,37 @@ class PhoneController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $phone = Phone::find($id);
+        $validProduct = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'image' => 'image|mimes:jpg,jpeg,png,gif,svg',
+            'quantity' => 'required',
+            'date' => 'required ',
+            'popular' => 'required'
+        ]);
+
+        if ($request->image) {
+            $image = $request->file('image');
+            $destinationPath = 'assets/products/images/phone';
+            $extension = $image->getClientOriginalExtension();
+            $imageName = date("YmdHis") . '.' . $extension;
+            $validProduct['image'] = $imageName;
+            $phone->image = $image;
+
+            if ($phone->image) {
+                $oldImagePath = $destinationPath . '/' . $phone->image;
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+            $image->move($destinationPath, $imageName);
+        }
+
+        $phone->update($validProduct);
+
+        return redirect('admin/phones');
     }
 
     /**
@@ -105,12 +137,12 @@ class PhoneController extends Controller
     public function destroy($id)
     {
         $phone = Phone::find($id);
-        // if ($phone->image) {
-        //     $path = 'assets/products/images/phone' . $phone->image;
-        //     if (TestingFile::exists($path)) {
-        //         TestingFile::delete($path);
-        //     }
-        // }
+        if ($phone->image) {
+            $oldImagePath = 'assets/products/images/phone' . '/' . $phone->image;
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+        }
         $phone->delete();
         return redirect('/admin/phones')->with('status', 'Phone successfully deleted');
     }

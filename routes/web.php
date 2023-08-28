@@ -9,7 +9,6 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\product\GameController;
 use App\Http\Controllers\product\PcController;
 use App\Http\Controllers\product\PhoneController;
-use App\Models\product\GameDevice;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,19 +35,28 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/admin/game-devices', [GameController::class, 'index'])->name('getAllGameDevices');
     Route::get('/admin/create-game-device', [GameController::class, 'create'])->name('createGameDevice');
     Route::post('/admin/insert-game-device', [GameController::class, 'store'])->name('gameStore');
-    Route::delete('/admin/delete-game-device/{id}', [GameController::class, 'destroy'])->name('gameDelete');
+    Route::get('/admin/delete-game-device/{id}', [GameController::class, 'destroy'])->name('gameDelete');
+    Route::get('/admin/edit-game-device/{id}', [GameController::class, 'edit'])->name('editGame');
+    Route::put('/admin/update-game-device/{id}', [GameController::class, 'update'])->name('updateGame');
+    Route::get('/admin/show-game-device/{id}', [GameController::class, 'show'])->name('showGame');
 
     // Pc devices
     Route::get('/admin/pc-devices', [PcController::class, 'index'])->name('getAllPCDevices');
     Route::get('/admin/create-pc-device', [PcController::class, 'create'])->name('createPCDevice');
     Route::post('/admin/insert-pc-device', [PcController::class, 'store'])->name('pcStore');
     Route::get('/admin/delete-pc-device/{id}', [PcController::class, 'destroy'])->name('pcDelete');
+    Route::get('/admin/edit-pc-device/{id}', [PcController::class, 'edit'])->name('editPc');
+    Route::put('/admin/update-pc-device/{id}', [PcController::class, 'update'])->name('updatePc');
+    Route::get('/admin/show-pc-device/{id}', [PcController::class, 'show'])->name('showPc');
 
     // Phones
     Route::get('/admin/phones', [PhoneController::class, 'index'])->name('getAllPhones');
     Route::get('/admin/create-phone', [PhoneController::class, 'create'])->name('createPhone');
     Route::post('/admin/insert-phone', [PhoneController::class, 'store'])->name('phoneStore');
     Route::get('/admin/delete-phone/{id}', [PhoneController::class, 'destroy'])->name('phoneDelete');
+    Route::get('/admin/edit-phone/{id}', [PhoneController::class, 'edit'])->name('editPhone');
+    Route::put('/admin/update-phone/{id}', [PhoneController::class, 'update'])->name('updatePhone');
+    Route::get('/admin/show-phone/{id}', [PhoneController::class, 'show'])->name('showPhone');
 });
 
 // --------------------------------------------------------------------------------------------------------
